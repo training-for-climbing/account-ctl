@@ -56,8 +56,7 @@ public class PositionalLinkedList<T> {
 	}
 	
 	public Position peekLastPosition() {
-		// TODO: Implement stub
-		return null;
+		return this.head;
 	}
 	
 	public T popFromBack() {
