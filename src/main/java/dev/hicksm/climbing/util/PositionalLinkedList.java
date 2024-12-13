@@ -36,7 +36,7 @@ public class PositionalLinkedList<T> {
 	
 	public int size() { return size; }
 	
-	public class Position {
+	public static class Position {
 		
 		public Position previous, next;
 		
