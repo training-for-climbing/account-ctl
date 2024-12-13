@@ -13,15 +13,25 @@ public class PositionalLinkedList<T> {
 	private int size;
 	
 	public PositionalLinkedList() {
-		this.head = new Position();
-		this.tail = new Position();
+		this.head = null;
+		this.tail = null;
 		this.data = new HashMap<Position, T>();
 		this.size = 0;
 	}
 	
 	public Position insert(T t) {
-		// TODO: Implement stub
-		return null;
+		// Create a new position in front of head, then reassign head
+		Position newHead = new Position();
+		if (this.head != null) {
+			newHead.previous = this.head;
+			this.head.next = newHead;
+		}
+		this.head = newHead;
+		
+		// Insert data at new head
+		this.data.put(this.head, t);
+		this.size++;
+		return this.head;
 	}
 	
 	public void moveToFront(Position p) {
