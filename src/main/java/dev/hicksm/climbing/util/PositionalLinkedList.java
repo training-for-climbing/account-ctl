@@ -29,7 +29,7 @@ public class PositionalLinkedList<T> {
 		return null;
 	}
 	
-	public T popFromBacck() {
+	public T popFromBack() {
 		// TODO: Implement stub
 		return null;
 	}
