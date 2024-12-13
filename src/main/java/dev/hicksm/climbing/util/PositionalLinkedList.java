@@ -60,8 +60,20 @@ public class PositionalLinkedList<T> {
 	}
 	
 	public T popFromBack() {
-		// TODO: Implement stub
-		return null;
+		// Edge case: tail does not exist
+		if (this.tail == null) {
+			return null;
+		}
+		
+		// Get data from tail
+		T res = this.data.get(this.tail);
+		
+		// Delete tail
+		Position newTail = this.tail.next;
+		data.remove(this.tail);
+		this.tail = newTail;
+		
+		return res;
 	}
 	
 	public int size() { return size; }
