@@ -1,6 +1,7 @@
 package dev.hicksm.climbing.util;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 public class PositionalLinkedList<T> {
@@ -12,7 +13,10 @@ public class PositionalLinkedList<T> {
 	private int size;
 	
 	public PositionalLinkedList() {
-		// TODO: Implement stub
+		this.head = new Position();
+		this.tail = new Position();
+		this.data = new HashMap<Position, T>();
+		this.size = 0;
 	}
 	
 	public Position insert(T t) {
