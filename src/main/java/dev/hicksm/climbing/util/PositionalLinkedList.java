@@ -35,7 +35,24 @@ public class PositionalLinkedList<T> {
 	}
 	
 	public void moveToFront(Position p) {
-		// TODO: Implement stub
+		// Edge case: p is already in the front
+		if (p.next == null) {
+			return;
+		}
+		
+		// Re-link the positions before and after p
+		if (p.previous != null) {
+			p.previous.next = p.next;
+		}
+		p.next.previous = p.previous;
+		
+		// Move p to the front
+		this.head.next = p;
+		p.previous = this.head;
+		p.next = null;
+		
+		// Make p the new head
+		this.head = p;
 	}
 	
 	public Position peekLastPosition() {
