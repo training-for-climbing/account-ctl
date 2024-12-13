@@ -3,14 +3,21 @@ package dev.hicksm.climbing.util;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.util.Random;
 
 public class PasswordHasher {
 	
 	private static final String HASH_ALGORITHM = "SHA-256";
 	
 	public static String generateSalt() {
-		// TODO: Implement stub
-		return null;
+		// Get secure RNG and random bytes
+		final Random r = new SecureRandom();
+		byte[] bytes = new byte[4];
+		r.nextBytes(bytes);
+		
+		// Return hex string from bytes
+		return bytesToHex(bytes);
 	}
 	
 	/// from https://www.baeldung.com/sha-256-hashing-java

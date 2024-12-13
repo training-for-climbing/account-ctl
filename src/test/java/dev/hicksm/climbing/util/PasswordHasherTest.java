@@ -1,5 +1,8 @@
 package dev.hicksm.climbing.util;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -94,6 +97,37 @@ public class PasswordHasherTest {
 	void testHashPassword7() {
 		String s1 = "donnahaditcoming", s2 = "iloveyou";
 		String salt1 = "8790sad", salt2 = "v6as834d";
+		
+		HashedPassword r1 = PasswordHasher.hashPassword(s1, salt1),
+				r2 = PasswordHasher.hashPassword(s2, salt2);
+		
+		Assertions.assertNotEquals(r1.hashedPassword, r2.hashedPassword);
+	}
+	
+	/*
+		This test verifies that 2^16 salts can be generated without any collisions.
+	*/
+	@Test
+	void testGenerateSalt() {
+		long saltCount = (long) Math.floor(Math.pow(2, 16));
+		
+		Set<String> salts = new HashSet<>();
+		
+		for (int i = 0; i < saltCount; i++) {
+			salts.add(PasswordHasher.generateSalt());
+		}
+		
+		Assertions.assertEquals(saltCount, salts.size());
+	}
+	
+	/*
+		Simple use-case oriented test for PasswordHasher: hashing two different 
+		passwords with two different salts.
+	*/
+	@Test 
+	void testPasswordHasher() {
+		String s1 = "iloveyou", s2 = "donnahaditcoming";
+		String salt1 = PasswordHasher.generateSalt(), salt2 = PasswordHasher.generateSalt();
 		
 		HashedPassword r1 = PasswordHasher.hashPassword(s1, salt1),
 				r2 = PasswordHasher.hashPassword(s2, salt2);
