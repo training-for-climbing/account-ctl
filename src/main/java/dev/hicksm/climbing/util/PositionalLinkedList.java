@@ -22,9 +22,12 @@ public class PositionalLinkedList<T> {
 	public Position insert(T t) {
 		// Create a new position in front of head, then reassign head
 		Position newHead = new Position();
+		newHead.previous = this.head;
 		if (this.head != null) {
-			newHead.previous = this.head;
 			this.head.next = newHead;
+		} else {
+			// If newHead is the first element, make it the tail as well
+			this.tail = newHead;
 		}
 		this.head = newHead;
 		
@@ -72,6 +75,7 @@ public class PositionalLinkedList<T> {
 		Position newTail = this.tail.next;
 		data.remove(this.tail);
 		this.tail = newTail;
+		this.size--;
 		
 		return res;
 	}
