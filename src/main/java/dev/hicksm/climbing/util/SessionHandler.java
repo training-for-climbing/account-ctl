@@ -12,7 +12,7 @@ public class SessionHandler {
 	
 	private PositionalLinkedList<Long> lru;
 	
-	private Map<Long, SecretKey> keyMap;
+	protected Map<Long, SecretKey> keyMap;
 	
 	private SessionHandler(int sessionLifespan) {
 		// TODO: Implement stub
@@ -31,5 +31,12 @@ public class SessionHandler {
 		// TODO: Implement stub
 		return null;
 	}
+	
+	protected static SessionHandler getInstance(int sessionLifespan) {
+		// TODO: Implement stub
+		return null;
+	}
+	
+	protected static void reset() { instance = null; }
 
 }
