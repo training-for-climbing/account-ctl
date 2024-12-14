@@ -20,24 +20,27 @@ public class PositionalLinkedList<T> {
 	}
 	
 	public Position insert(T t) {
-		// Create a new position in front of head, then reassign head
+		// Create a new position and assign data to it
 		Position newHead = new Position();
-		newHead.previous = this.head;
-		if (this.head != null) {
-			this.head.next = newHead;
-		} else {
-			// If newHead is the first element, make it the tail as well
+		this.data.put(newHead, t);
+		this.size++;
+		
+		// If newHead is the first position, make it the head and tail
+		if (this.head == null) {
+			this.head = newHead;
 			this.tail = newHead;
 		}
-		this.head = newHead;
 		
-		// Insert data at new head
-		this.data.put(this.head, t);
-		this.size++;
+		// Move the new position to the front
+		this.moveToFront(newHead);
+		
 		return this.head;
 	}
 	
 	public void moveToFront(Position p) {
+		// Set lastAccess to current date-time
+		p.lastAccess = LocalDateTime.now();
+		
 		// Edge case: p is already in the front
 		if (p.next == null) {
 			return;
