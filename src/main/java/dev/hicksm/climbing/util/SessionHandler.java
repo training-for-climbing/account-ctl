@@ -12,7 +12,7 @@ public class SessionHandler {
 	
 	private PositionalLinkedList<Long> lru;
 	
-	protected Map<Long, SecretKey> keyMap;
+	private Map<Long, SecretKey> keyMap;
 	
 	private SessionHandler(int sessionLifespan) {
 		// TODO: Implement stub
@@ -25,6 +25,11 @@ public class SessionHandler {
 	
 	public void setKey(Long sessionId, SecretKey key) {
 		// TODO: Implement stub
+	}
+	
+	public Boolean containsSession(Long sessionId) {
+		// TODO: Implement stub
+		return null;
 	}
 	
 	public static SessionHandler getInstance() {

@@ -52,8 +52,10 @@ public class SessionHandlerTest {
 	*/
 	@Test
 	void testGetKey() {
+		Long id = 132l;
 		SessionHandler sh = SessionHandler.getInstance();
-		Assertions.assertNull(sh.getKey(132l));
+		Assertions.assertFalse(sh.containsSession(id));
+		Assertions.assertNull(sh.getKey(id));
 	}
 	
 	/*
@@ -74,6 +76,7 @@ public class SessionHandlerTest {
 		
 		// Validate key assignment
 		SecretKey res = sh.getKey(id);
+		Assertions.assertTrue(sh.containsSession(id));
 		Assertions.assertNotNull(res);
 		Assertions.assertEquals(k, res);
 	}
@@ -99,6 +102,7 @@ public class SessionHandlerTest {
 		
 		// Validate key assignment
 		SecretKey res1 = sh.getKey(id);
+		Assertions.assertTrue(sh.containsSession(id));
 		Assertions.assertNotNull(res1);
 		Assertions.assertEquals(k1, res1);
 		Assertions.assertNotEquals(k2, res1);
@@ -108,6 +112,7 @@ public class SessionHandlerTest {
 		
 		// Validate key assignment
 		SecretKey res2 = sh.getKey(id);
+		Assertions.assertTrue(sh.containsSession(id));
 		Assertions.assertNotNull(res2);
 		Assertions.assertNotEquals(k1, res2);
 		Assertions.assertEquals(k2, res2);
@@ -141,6 +146,7 @@ public class SessionHandlerTest {
 			Assertions.fail("Could not sleep thread. See stack trace.");
 		}
 		
+		Assertions.assertFalse(sh.containsSession(id));
 		Assertions.assertNull(sh.getKey(id));
 		Assertions.assertNotEquals(k, sh.getKey(id));
 	}
@@ -164,7 +170,7 @@ public class SessionHandlerTest {
 		
 		sh.setKey(id, null);
 		
-		Assertions.assertTrue(sh.keyMap.containsKey(id));
+		Assertions.assertTrue(sh.containsSession(id));
 		Assertions.assertNull(sh.getKey(id));
 	}
 
