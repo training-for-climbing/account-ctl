@@ -25,7 +25,7 @@ public class PositionalLinkedList<T> {
 		this.data.put(newHead, t);
 		this.size++;
 		
-		// If newHead is the first position, make it the head and tail
+		// Edge case: If newHead is the first position, make it the head and tail
 		if (this.head == null) {
 			this.head = newHead;
 			this.tail = newHead;
@@ -42,23 +42,31 @@ public class PositionalLinkedList<T> {
 		p.lastAccess = LocalDateTime.now();
 		
 		// Edge case: p is already in the front
-		if (p.next == null) {
+		if (p == this.head) {
 			return;
 		}
 		
 		// Re-link the positions before and after p
-		if (p.previous != null) {
-			p.previous.next = p.next;
-		}
-		p.next.previous = p.previous;
-		
-		// Move p to the front
-		this.head.next = p;
-		p.previous = this.head;
-		p.next = null;
-		
-		// Make p the new head
-		this.head = p;
+	    if (p.previous != null) {
+	        p.previous.next = p.next;
+	    }
+	    if (p.next != null) {
+	        p.next.previous = p.previous;
+	    }
+
+	    // Edge case: if p is the only node in the list
+	    if (this.head == null) {
+	        this.head = p;
+	        this.tail = p;
+	        p.previous = null;
+	        p.next = null;
+	    } else {
+	        // Move p to the front
+	        p.next = this.head;
+	        this.head.previous = p;
+	        p.previous = null;
+	        this.head = p;
+	    }
 	}
 	
 	public Position peekLastPosition() {
