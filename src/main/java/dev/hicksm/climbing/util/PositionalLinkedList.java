@@ -13,79 +13,69 @@ public class PositionalLinkedList<T> {
 	private int size;
 	
 	public PositionalLinkedList() {
-		this.head = null;
-		this.tail = null;
 		this.data = new HashMap<Position, T>();
 		this.size = 0;
+		
+		// Set up dummy nodes
+		this.head = new Position();
+		this.tail = new Position();
+		this.tail.next = this.head;
+		this.head.previous = this.tail;
 	}
 	
 	public Position insert(T t) {
-		// Create a new position and assign data to it
-		Position newHead = new Position();
-		this.data.put(newHead, t);
+		// Create a new position
+		Position newNode = new Position();
 		this.size++;
 		
-		// Edge case: If newHead is the first position, make it the head and tail
-		if (this.head == null) {
-			this.head = newHead;
-			this.tail = newHead;
-		}
+		// Assign data to position
+		this.data.put(newNode, t);
 		
 		// Move the new position to the front
-		this.moveToFront(newHead);
+		this.moveToFront(newNode);
 		
-		return this.head;
+		return newNode;
 	}
 	
 	public void moveToFront(Position p) {
 		// Set lastAccess to current date-time
 		p.lastAccess = LocalDateTime.now();
 		
-		// Edge case: p is already in the front
-		if (p == this.head) {
-			return;
-		}
+		// Save p's neighboring positions
+		Position oldPrevious = p.previous;
+		Position oldNext = p.next;
 		
-		// Re-link the positions before and after p
-	    if (p.previous != null) {
-	        p.previous.next = p.next;
-	    }
-	    if (p.next != null) {
-	        p.next.previous = p.previous;
-	    }
-
-	    // Edge case: if p is the only node in the list
-	    if (this.head == null) {
-	        this.head = p;
-	        this.tail = p;
-	        p.previous = null;
-	        p.next = null;
-	    } else {
-	        // Move p to the front
-	        p.next = this.head;
-	        this.head.previous = p;
-	        p.previous = null;
-	        this.head = p;
-	    }
+		// Move p to the front
+		p.previous = this.head.previous;
+		p.next = this.head;
+		
+		// Re-link p's old neighboring positions (if not null)
+		if (oldPrevious != null) {
+			oldPrevious.next = oldNext;
+			oldNext.previous = oldPrevious;
+		}
 	}
 	
 	public Position peekLastPosition() {
-		return this.head;
+		return this.head.previous;
 	}
 	
 	public T popFromBack() {
-		// Edge case: tail does not exist
-		if (this.tail == null) {
-			return null;
-		}
+		// Edge case: If PLL is already empty, return null
+		if (this.size == 0) { return null; }
 		
-		// Get data from tail
-		T res = this.data.get(this.tail);
+		// Save the position after the last non-dummy position
+		Position oldBack = this.tail.next;
+		Position newBack = oldBack.next;
 		
-		// Delete tail
-		Position newTail = this.tail.next;
-		data.remove(this.tail);
-		this.tail = newTail;
+		// Get data from last non-dummy position
+		T res = data.get(oldBack);
+		
+		// Link new back with tail
+		newBack.previous = this.tail;
+		this.tail.next = newBack;
+		
+		// Reduce size of PLL
 		this.size--;
 		
 		return res;

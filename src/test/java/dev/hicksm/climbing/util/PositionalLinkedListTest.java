@@ -12,16 +12,14 @@ public class PositionalLinkedListTest {
 	void resetPLL() { pll = new PositionalLinkedList<String>(); }
 	
 	/*
-	  	This test verifies the expected behavior of an empty PLL:
+	  	This test verifies the expected properties of an empty PLL:
 	  	
 	  	- pll.size() == 0
-	  	- pll.peekLastPosition() == null
 	  	- pll.popFromBack() == null
 	*/
 	@Test
 	void testEmpty() {
 		Assertions.assertEquals(0, pll.size());
-		Assertions.assertNull(pll.peekLastPosition());
 		Assertions.assertNull(pll.popFromBack());
 	}
 	
@@ -55,9 +53,6 @@ public class PositionalLinkedListTest {
 		
 		// Check that the PLL's size has increased as expected
 		Assertions.assertEquals(strings.length, pll.size());
-		
-		// Check that the PLL's head is non-empty
-		Assertions.assertNotNull(pll.peekLastPosition());
 		
 		// Check that the Positions are properly linked
 		Assertions.assertNotNull(pll.peekLastPosition().previous);
@@ -114,6 +109,11 @@ public class PositionalLinkedListTest {
 		// Check that the LAST element has been popped
 		Assertions.assertEquals("last", pll.popFromBack());
 		Assertions.assertEquals(0, pll.size());
+	}
+	
+	@Test
+	void testMoveToFront1() {
+		
 	}
 	
 
