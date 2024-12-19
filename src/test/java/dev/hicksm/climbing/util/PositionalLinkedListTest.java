@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import dev.hicksm.climbing.util.PositionalLinkedList.Position;
+
 public class PositionalLinkedListTest {
 	
 	private PositionalLinkedList<String> pll;
@@ -16,11 +18,13 @@ public class PositionalLinkedListTest {
 	  	
 	  	- pll.size() == 0
 	  	- pll.popFromBack() == null
+	  	- pll.peekLastPosition() == null
 	*/
 	@Test
 	void testEmpty() {
 		Assertions.assertEquals(0, pll.size());
 		Assertions.assertNull(pll.popFromBack());
+		Assertions.assertNull(pll.peekLastPosition());
 	}
 	
 	/*
@@ -111,9 +115,28 @@ public class PositionalLinkedListTest {
 		Assertions.assertEquals(0, pll.size());
 	}
 	
+	/*
+	 	This test checks that pll.moveToFront() can re-order
+	 	the Positions of a PLL.
+	*/
 	@Test
-	void testMoveToFront1() {
+	void testMoveToFront() {
+		// Add multiple items to the PLL
+		String[] strings = {"first", "second", "third", "last"};
+		for (int i = 0; i < strings.length; i++) {
+			pll.insert(strings[i]);
+		}
 		
+		// Get SECOND position and move it to the front
+		Position second = pll.peekLastPosition().previous.previous;
+		pll.moveToFront(second);
+		
+		// Now, the PLL should have this order:
+		// "first", "third", "last", "second"
+		Assertions.assertEquals("first", pll.popFromBack());
+		Assertions.assertEquals("third", pll.popFromBack());
+		Assertions.assertEquals("last", pll.popFromBack());
+		Assertions.assertEquals("second", pll.popFromBack());
 	}
 	
 
