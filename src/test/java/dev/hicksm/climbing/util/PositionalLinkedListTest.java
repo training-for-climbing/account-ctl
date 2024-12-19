@@ -1,5 +1,6 @@
 package dev.hicksm.climbing.util;
 
+import java.time.LocalDateTime;
 import java.util.Random;
 
 import org.junit.jupiter.api.Assertions;
@@ -172,6 +173,41 @@ public class PositionalLinkedListTest {
 		Assertions.assertEquals("third", pll.popFromBack());
 		Assertions.assertEquals("last", pll.popFromBack());
 		Assertions.assertEquals("second", pll.popFromBack());
+	}
+	
+	/*
+	  	This test verifies that a Position's lastAccess updates upon
+	  	initial insertion and when moving to the front.
+	*/
+	@Test
+	void testLastAccess() {
+		// Add an item to the PLL
+		String s = "mulch";
+		pll.insert(s);
+		
+		// Save the last position's lastAccess from immediately after insertion
+		Position lastPosition = pll.peekLastPosition();
+		LocalDateTime before = lastPosition.lastAccess;
+		
+		// Check that lastAccess is not null
+		Assertions.assertNotNull(before);
+		
+		try {
+			// Wait for 0.01s
+			Thread.sleep(10);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			Assertions.fail("Could not sleep thread. See stack trace.");
+		}
+		
+		// Update the last position. This should result in lastAccess
+		// moving forwards by 0.01s
+		pll.moveToFront(lastPosition);
+		LocalDateTime after = lastPosition.lastAccess;
+		
+		// Check that lastAccess has updated after lastPosition is moved to front
+		Assertions.assertTrue(before.isBefore(after));
 	}
 
 }
