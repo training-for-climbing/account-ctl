@@ -61,9 +61,11 @@ public class PositionalLinkedList<T> {
 		return size == 0 ? null : this.head.previous;
 	}
 	
-	public T popFromBack() {
-		// Edge case: If PLL is already empty, return null
-		if (this.size == 0) { return null; }
+	public T popFromBack() throws IllegalStateException {
+		// Edge case: If PLL is empty, throw IllegalStateException
+		if (this.size == 0) { 
+			throw new IllegalStateException("Cannot pop from an empty PositionalLinkedList.");
+		}
 		
 		// Save the position after the last non-dummy position
 		Position oldBack = this.tail.next;

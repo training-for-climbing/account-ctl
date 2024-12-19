@@ -17,14 +17,22 @@ public class PositionalLinkedListTest {
 	  	This test verifies the expected properties of an empty PLL:
 	  	
 	  	- pll.size() == 0
-	  	- pll.popFromBack() == null
 	  	- pll.peekLastPosition() == null
+	  	- pll.popFromBack() throws IllegalStateException
 	*/
 	@Test
 	void testEmpty() {
+		// pll.size == 0
 		Assertions.assertEquals(0, pll.size());
-		Assertions.assertNull(pll.popFromBack());
+		
+		// pll.peekLastPosition() == null
 		Assertions.assertNull(pll.peekLastPosition());
+		
+		// pll.popFromBack() throws IllegalStateException
+		Assertions.assertThrows(
+			IllegalStateException.class, 
+			() -> pll.popFromBack()
+		);
 	}
 	
 	/*
