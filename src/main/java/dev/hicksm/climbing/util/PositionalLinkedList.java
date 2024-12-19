@@ -52,6 +52,9 @@ public class PositionalLinkedList<T> {
 		// Move p to the front
 		p.previous = this.head.previous;
 		p.next = this.head;
+		
+		this.head.previous.next = p;
+		this.head.previous = p;
 	}
 	
 	public Position peekLastPosition() {
