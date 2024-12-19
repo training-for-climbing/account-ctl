@@ -86,6 +86,10 @@ public class PositionalLinkedList<T> {
 	
 	public int size() { return size; }
 	
+	protected Map<Position, T> getData() { return this.data; }
+	
+	protected Position getHead() { return this.head; }
+	
 	public static class Position {
 		
 		public Position previous, next;
