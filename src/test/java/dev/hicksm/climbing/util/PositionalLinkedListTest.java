@@ -173,6 +173,5 @@ public class PositionalLinkedListTest {
 		Assertions.assertEquals("last", pll.popFromBack());
 		Assertions.assertEquals("second", pll.popFromBack());
 	}
-	
 
 }
