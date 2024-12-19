@@ -26,13 +26,13 @@ public class PositionalLinkedList<T> {
 	public Position insert(T t) {
 		// Create a new position
 		Position newNode = new Position();
-		this.size++;
-		
-		// Assign data to position
-		this.data.put(newNode, t);
 		
 		// Move the new position to the front
 		this.moveToFront(newNode);
+		
+		// Assign data to position
+		this.data.put(newNode, t);
+		this.size++;
 		
 		return newNode;
 	}
@@ -45,19 +45,17 @@ public class PositionalLinkedList<T> {
 		Position oldPrevious = p.previous;
 		Position oldNext = p.next;
 		
+		// Re-link p's old neighboring positions (if not null)
+		if (oldPrevious != null) { oldPrevious.next = oldNext; }
+		if (oldNext != null) { oldNext.previous = oldPrevious; }
+		
 		// Move p to the front
 		p.previous = this.head.previous;
 		p.next = this.head;
-		
-		// Re-link p's old neighboring positions (if not null)
-		if (oldPrevious != null) {
-			oldPrevious.next = oldNext;
-			oldNext.previous = oldPrevious;
-		}
 	}
 	
 	public Position peekLastPosition() {
-		return this.head.previous;
+		return size == 0 ? null : this.head.previous;
 	}
 	
 	public T popFromBack() {
