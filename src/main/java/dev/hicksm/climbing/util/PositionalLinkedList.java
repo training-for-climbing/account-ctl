@@ -17,10 +17,10 @@ public class PositionalLinkedList<T> {
 		this.size = 0;
 		
 		// Set up dummy nodes
-		this.head = new Position();
 		this.tail = new Position();
-		this.tail.next = this.head;
-		this.head.previous = this.tail;
+		this.head = new Position();
+		this.head.next = this.tail;
+		this.tail.previous = this.head;
 	}
 	
 	public Position insert(T t) {
@@ -50,15 +50,15 @@ public class PositionalLinkedList<T> {
 		if (oldNext != null) { oldNext.previous = oldPrevious; }
 		
 		// Move p to the front
-		p.previous = this.head.previous;
-		p.next = this.head;
+		p.previous = this.tail.previous;
+		p.next = this.tail;
 		
-		this.head.previous.next = p;
-		this.head.previous = p;
+		this.tail.previous.next = p;
+		this.tail.previous = p;
 	}
 	
 	public Position peekLastPosition() {
-		return size == 0 ? null : this.head.previous;
+		return size == 0 ? null : this.tail.previous;
 	}
 	
 	public T popFromBack() throws IllegalStateException {
@@ -68,15 +68,15 @@ public class PositionalLinkedList<T> {
 		}
 		
 		// Save the position after the last non-dummy position
-		Position oldBack = this.tail.next;
+		Position oldBack = this.head.next;
 		Position newBack = oldBack.next;
 		
 		// Get data from last non-dummy position
 		T res = data.remove(oldBack);
 		
-		// Link new back with tail
-		newBack.previous = this.tail;
-		this.tail.next = newBack;
+		// Link new back with head
+		newBack.previous = this.head;
+		this.head.next = newBack;
 		
 		// Reduce size of PLL
 		this.size--;
