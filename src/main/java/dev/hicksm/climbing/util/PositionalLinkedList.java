@@ -72,7 +72,7 @@ public class PositionalLinkedList<T> {
 		Position newBack = oldBack.next;
 		
 		// Get data from last non-dummy position
-		T res = data.get(oldBack);
+		T res = data.remove(oldBack);
 		
 		// Link new back with tail
 		newBack.previous = this.tail;
